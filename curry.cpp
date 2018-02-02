@@ -47,7 +47,26 @@ int f(int a, int b, int c) {
 	return a + b + c;
 }
 
+/******/
+// A simple curry good for 2 args:
+template <typename Function>
+auto curry2(Function f) {
+	return f;
+}
+
+template <typename Function, typename Arg1>
+auto curry2(Function f, Arg1 a) {
+	return std::bind(f, a, std::placeholders::_1);
+}
+
+int f2(int a, int b) {
+	return a + b;
+}
+
 int main() {
 	std::cout << curry(f)(1)(2)(3) << std::endl;
+	std::cout << curry2(f2)(1, 2) << std::endl;
+	std::cout << curry2(f2, 1)(2) << std::endl;
+
 	return 0;
 }
